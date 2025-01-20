@@ -48,3 +48,38 @@ def overlap_rec_rec(rect1, rect2):
     else:
         shape_overlap = shapes.Rectangle(overlapX[0], overlapY[0], lenX, lenY)
     return shape_overlap
+
+## solve a linear system of 2 equations, and return a piont
+#
+# used in overlap_lines
+def solve_system2(slope1, intercept1, slope2, intercept2):
+    #y = mx+b
+    #y = nx+a
+    x = (intercept2 - intercept1) / (slope1 - slope2)
+    y = slope1 * x + intercept1
+    return shapes.Point(x,y)
+## get slope of 2 points, return int
+#
+# called in overlap_lines
+def get_line_slope(point1, point2):
+    rize = point2.y - point1.y
+    run = point2.x - point1.y
+    slope = rize/run
+    return slope
+
+def get_y_intercept(point, slope):
+    #y = mx+b
+    #b = y - mx
+    intercept = point.y - slope * point.x
+
+def overlap_lines(line1, line2):
+    slope1 = get_line_slope(line1.p1, line1.p2)
+    slope2 = get_line_slope(line2.p1, line2.p2)
+    intercept1 = get_y_intercept(line1.p1, slope1)
+    intercept2 = get_y_intercept(line2.p1, slope2)
+    intersection = solve_system2(slope1, intercept1, slope2, intercept2)
+    if pr.check_collision_point_rec(intersection.ctype(), line1.smallest_rec()) and pr.check_collision_point_rec(intersection.ctype(), line2.smallest_rect()):
+        return intersection
+    else:
+        return False
+
