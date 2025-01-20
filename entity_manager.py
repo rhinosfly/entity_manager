@@ -4,7 +4,7 @@
 # handles collisions between arbitrary geometries that are registered with the manager
 
 import pyray as pr
-from shape import Shape_type, Shape
+import shapes
 import overlap_funcs
 
 ## an overlap between 2 arbitrary entities
@@ -17,26 +17,11 @@ class Overlap:
 
 ## a Shape which can be tested for collisions
 class Entity:
-    def __init__(self, shape_type, geometry):
+    def __init__(self, shape):
         ## the shape of the entity
-        self.shape = Shape(shape_type, geometry)
-        ## the smallest possible rectangle containing the geometry
-        self.rectangle = Entity.shape_to_rectangle(self.shape)
+        self.shape = shape
         ## a list of overlaps with this entity
         self.overlaps = []
-        ## boolean indicating wheather this entities collisions should be checked
-        #
-        # support for this feature not yet implemented
-        self.recalculate = True
-    ## return the smallest possible rectangle containing the shape
-    #
-    ##only rectangles for now, so just return geometry
-    def shape_to_rectangle(shape):
-        if shape.type == Shape_type.RECTANGLE:
-            return shape.geometry
-        else:
-            return False
-
 
 ## manages entity collisions
 class Entity_manager:
@@ -55,9 +40,9 @@ class Entity_manager:
     #- decide type of both entities
     #- call appropriate collision function
     def get_entity_overlap(entity1, entity2):
-        overlap = Overlap(entity1, entity2, Shape(Shape_type.NONE, Shape_type.NONE))
-        if entity1.shape.type == entity2.shape.type == Shape_type.RECTANGLE:
-            overlap.shape = overlap_funcs.overlap_rec_rec(entity1.shape.geometry, entity2.shape.geometry)
+        overlap = Overlap(entity1, entity2, None)
+        if isinstance(entity1.shape, shapes.Rectangle) and isinstance(entity2.shape, shapes.Rectangle):
+            overlap.shape = overlap_funcs.overlap_rec_rec(entity1.shape, entity2.shape)
         return overlap
     ## check all necesary collisions
     #
@@ -75,7 +60,7 @@ class Entity_manager:
                 entity1 = self.entities[keys[i]]
                 entity2 = self.entities[keys[j]]
                 overlap = Entity_manager.get_entity_overlap(entity1, entity2)
-                if overlap.shape.type == Shape_type.RECTANGLE:
+                if isinstance(overlap.shape, shapes.Rectangle):
                     self.overlaps.append(overlap)
                     entity1.overlaps.append(overlap)
                     entity2.overlaps.append(overlap)

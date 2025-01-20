@@ -6,8 +6,7 @@
 
 ## for geometry structs
 import pyray as pr
-from shape import *
-
+import shapes
 
 ## get the overlap between two line segments
 #
@@ -35,7 +34,7 @@ def overlap_line_segments(tup1, tup2):
 # return Shape_type.LINE for touching edge\n
 # return Shape_type.RECTANGLE for overlaping area\n
 def overlap_rec_rec(rect1, rect2):
-    shape_overlap = Shape(Shape_type.NONE, 0)
+    shape_overlap = None
     overlapX = overlap_line_segments((rect1.x, rect1.x + rect1.width), (rect2.x, rect2.x + rect2.width))
     overlapY = overlap_line_segments((rect1.y, rect1.y + rect1.height), (rect2.y, rect2.y + rect2.height))
     lenX = overlapX[1] - overlapX[0]
@@ -43,12 +42,9 @@ def overlap_rec_rec(rect1, rect2):
     if lenX < 0 or lenY < 0:
         pass
     elif lenX == 0 and lenY == 0:
-        shape_overlap.type = Shape_type.POINT
-        shape_overlap.geometry = pr.Vector2(overlapX[0], overlapY[0])
+        shape_overlap = shapes.Point(overlapX[0], overlapY[0])
     elif lenX == 0 or lenY == 0:
-        shape_overlap.type = Shape_type.LINE
-        shape_overlap.geometry = (pr.Vector2(overlapX[0], overlapY[0]), pr.Vector2(overlapX[1], overlapY[1]))
+        shape_overlap = shapes.Line(shapes.Point(overlapX[0], overlapY[0]), shapes.Point(overlapX[1], overlapY[1]))
     else:
-        shape_overlap.type = Shape_type.RECTANGLE
-        shape_overlap.geometry = pr.Rectangle(overlapX[0], overlapY[0], lenX, lenY)
+        shape_overlap = shapes.Rectangle(overlapX[0], overlapY[0], lenX, lenY)
     return shape_overlap
