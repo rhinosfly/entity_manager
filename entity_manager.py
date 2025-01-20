@@ -4,8 +4,8 @@
 # handles collisions between arbitrary geometries that are registered with the manager
 
 import pyray as pr
-import shapes
-import overlap_funcs
+from . import shapes
+from . import overlap_funcs
 
 ## an overlap between 2 arbitrary entities
 class Overlap:	

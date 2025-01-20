@@ -6,7 +6,7 @@
 
 ## for geometry structs
 import pyray as pr
-import shapes
+from . import shapes
 
 ## get the overlap between two line segments
 #

@@ -3,8 +3,8 @@
 # test for entity manager
 #
 import pyray as pr
-import entity_manager as em
-import shapes
+from . import entity_manager as em
+from . import shapes
 
 ## the pixels-per-frame that boxes move
 SPEED = 3
