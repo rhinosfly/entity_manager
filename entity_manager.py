@@ -55,6 +55,8 @@ class Entity_manager:
         self.overlaps.clear()
         length = len(self.entities)
         keys = list(self.entities.keys())
+        for entity in self.entities.values():
+            entity.overlaps.clear()
         for i in range(length):
             for j in range(i+1, length):
                 entity1 = self.entities[keys[i]]
