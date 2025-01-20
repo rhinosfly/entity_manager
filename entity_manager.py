@@ -62,7 +62,7 @@ class Entity_manager:
                 entity1 = self.entities[keys[i]]
                 entity2 = self.entities[keys[j]]
                 overlap = Entity_manager.get_entity_overlap(entity1, entity2)
-                if isinstance(overlap.shape, shapes.Rectangle):
+                if overlap.shape:
                     self.overlaps.append(overlap)
                     entity1.overlaps.append(overlap)
                     entity2.overlaps.append(overlap)

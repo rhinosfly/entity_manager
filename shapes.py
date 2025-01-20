@@ -24,18 +24,18 @@ class Line(Shape):
         return (self.p1.ctype(), self.p2.ctype())
     def smallest_rect(self):
         rec = Rectangle(0,0,0,0)
-        if p1.x < p2.x:
-            rec.x = p1.x
-            rec.width = p2.x - p1.x
+        if self.p1.x < self.p2.x:
+            rec.x = self.p1.x
+            rec.width = self.p2.x - self.p1.x
         else:
-            rec.x = p2.x
-            rec.width = p1.x - p2.x
-        if p1.y < p2.y:
-            rec.y = p1.y
-            rec.height = p2.y - p1.y
+            rec.x = self.p2.x
+            rec.width = self.p1.x - self.p2.x
+        if self.p1.y < self.p2.y:
+            rec.y = self.p1.y
+            rec.height = self.p2.y - self.p1.y
         else:
-            rec.y = p2.y
-            rec.height = p1.y - p2.y
+            rec.y = self.p2.y
+            rec.height = self.p1.y - self.p2.y
         return rec
             
 class Rectangle(Shape):
