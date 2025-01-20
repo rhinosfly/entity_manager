@@ -14,6 +14,8 @@ class Point(Shape):
         self.y = y
     def ctype(self):
         return pr.Vector2(self.x, self.y)
+    def smallest_rect(self):
+        return Rectangle(self.x, self.y, 0, 0)
 class Line(Shape):
     def __init__(self, p1, p2):
         self.p1 = p1
@@ -44,3 +46,5 @@ class Rectangle(Shape):
         self.height = height
     def ctype(self):
         return pr.Rectangle(self.x, self.y, self.width, self.height)
+    def smallest_rect(self):
+        return self
